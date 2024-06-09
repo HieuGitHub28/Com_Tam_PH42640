@@ -3,38 +3,41 @@ package com.example.com_tam_ph42640
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-
+import com.example.com_tam_ph42640.database.AppDatabase
+import com.example.com_tam_ph42640.model.LoginViewModel
+import com.example.com_tam_ph42640.model.LoginViewModelFactory
 
 @Composable
 fun LoginScreen(naviController: NavController) {
+	val context = LocalContext.current
+	val loginViewModel: LoginViewModel = viewModel(
+		factory = LoginViewModelFactory(AppDatabase.getInstance(context).userDAO())
+	)
+
+	var email by remember { mutableStateOf("") }
+	var password by remember { mutableStateOf("") }
+	var errorMessage by remember { mutableStateOf("") }
+
 	Column(
 		modifier = Modifier
 			.fillMaxSize()
@@ -55,12 +58,12 @@ fun LoginScreen(naviController: NavController) {
 				fontWeight = FontWeight(900),
 			)
 			Spacer(modifier = Modifier.height(25.dp))
-			
+
 			Image(
 				painter = painterResource(id = R.drawable.logosplash), contentDescription = "",
 				modifier = Modifier.fillMaxSize(0.8f)
 			)
-			
+
 			Text(
 				text = "Chào mừng bạn quay trở lại!",
 				fontSize = 20.sp,
@@ -75,8 +78,11 @@ fun LoginScreen(naviController: NavController) {
 			verticalArrangement = Arrangement.SpaceEvenly,
 			horizontalAlignment = Alignment.CenterHorizontally
 		) {
-			InputField(label = "Email", value = "", onValueChange = {})
-			InputField(label = "Password", value = "", onValueChange = {})
+			InputField(label = "Email", value = email, onValueChange = { email = it })
+			InputField(label = "Password", value = password, onValueChange = { password = it })
+			if (errorMessage.isNotEmpty()) {
+				Text(text = errorMessage, color = Color.Red)
+			}
 			Row(
 				modifier = Modifier
 					.clip(RoundedCornerShape(30.dp))
@@ -88,20 +94,26 @@ fun LoginScreen(naviController: NavController) {
 			) {
 				Text(text = "Xác nhận", color = Color.White, fontSize = 18.sp,
 					modifier = Modifier.clickable {
-						naviController.navigate(Screen.FurnitureApp.route)
+						loginViewModel.login(email, password) { success ->
+							if (success) {
+								naviController.navigate(Screen.FurnitureApp.route)
+							} else {
+								errorMessage = "Email hoặc mật khẩu không đúng"
+							}
+						}
 					})
 			}
-			
+
 			Text(text =
 			buildAnnotatedString {
 				append("Chưa có tài khoản? ")
-				
+
 				withStyle(
 					SpanStyle(
 						color = Color.Red,
 						fontWeight = FontWeight(600)
 					)
-				){
+				) {
 					append("Đăng ký ngay!")
 				}
 			},
@@ -109,12 +121,9 @@ fun LoginScreen(naviController: NavController) {
 				modifier = Modifier.clickable {
 					naviController.navigate(Screen.Sign_inScreen.route)
 				})
-			
+
 		}
-		
-		
 	}
-	
 }
 
 @Composable
@@ -135,7 +144,7 @@ fun InputField(
 				.clip(shape = RoundedCornerShape(10.dp))
 				.background(Color("#D9D9D9".toColorInt()))
 				.height(50.dp)
-		
+
 		)
 	}
 }
