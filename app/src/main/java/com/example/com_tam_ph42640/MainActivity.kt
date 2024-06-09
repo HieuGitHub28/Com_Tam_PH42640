@@ -12,6 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.com_tam_ph42640.ui.theme.Com_Tam_PH42640Theme
+import com.example.com_tam_ph42640.ui.theme.screen.EditProfileScreen
+import com.example.com_tam_ph42640.ui.theme.screen.ProfileScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

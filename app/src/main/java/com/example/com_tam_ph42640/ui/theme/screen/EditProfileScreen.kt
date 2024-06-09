@@ -39,12 +39,12 @@ import com.example.com_tam_ph42640.InputField
 import com.example.com_tam_ph42640.R
 
 @Composable
-fun EditProfileScreen(navController: NavController){
+fun EditProfileScreen(){
 	Column(
 		modifier = Modifier
 			.fillMaxSize()
 			.background(Color.Black),
-		horizontalAlignment =  Alignment.CenterHorizontally,
+		horizontalAlignment = Alignment.CenterHorizontally,
 	) {
 		Row(
 			modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp),
@@ -52,12 +52,15 @@ fun EditProfileScreen(navController: NavController){
 			verticalAlignment = Alignment.CenterVertically
 		)
 		{
-			Icon(painter = painterResource(id = R.drawable.back), contentDescription = "Back",
+			Icon(
+				painter = painterResource(id = R.drawable.back),
+				contentDescription = "Back",
 				modifier = Modifier
 					.padding(0.dp, 50.dp, 0.dp, 0.dp)
 					.size(18.dp)
-					.clickable { navController.popBackStack()},
-				tint = Color.White,)
+					.clickable { /* Điều hướng quay lại màn hình trước */ },
+				tint = Color.White
+			)
 			Text(
 				text = "Sửa hồ sơ",
 				textAlign = TextAlign.Center,
@@ -66,11 +69,7 @@ fun EditProfileScreen(navController: NavController){
 				color = Color.White,
 				modifier = Modifier.padding(top = 50.dp)
 			)
-			Row(
-				modifier = Modifier.width(20.dp)
-			){
-			
-			}
+			Row(modifier = Modifier.width(20.dp)) {}
 		}
 		Spacer(modifier = Modifier.height(130.dp))
 		Column(
@@ -107,8 +106,12 @@ fun EditProfileScreen(navController: NavController){
 				verticalAlignment = Alignment.CenterVertically,
 				horizontalArrangement = Arrangement.Center
 			) {
-				Text(text = "Lưu", color = Color.White, fontSize = 18.sp,
-					modifier = Modifier.clickable { navController.popBackStack() })
+				Text(
+					text = "Lưu",
+					color = Color.White,
+					fontSize = 18.sp,
+					modifier = Modifier.clickable { /* Xử lý khi nhấn vào nút Lưu */ }
+				)
 			}
 		}
 	}
@@ -119,30 +122,12 @@ fun EditProfileScreen(navController: NavController){
 			.padding(top = 150.dp)
 	) {
 		Image(
-			painter = painterResource(id = R.drawable.logosplash), contentDescription = "",
+			painter = painterResource(id = R.drawable.logosplash),
+			contentDescription = "",
 			modifier = Modifier
 				.size(130.dp)
 				.border(12.dp, Color.White, RoundedCornerShape(140.dp)),
-			contentScale = ContentScale.Inside)
-	}
-}
-@Composable
-fun TextFeld(
-	label: String,
-	value: String,
-	onValueChange: (String) -> Unit
-){
-	Column(
-	) {
-		Text(text = label, fontSize = 16.sp, color = Color.White)
-		Spacer(modifier = Modifier.height(5.dp))
-		OutlinedTextField(
-			value = value,
-			onValueChange = onValueChange,
-			modifier = Modifier
-				.clip(shape = RoundedCornerShape(10.dp))
-				.background(Color("#D9D9D9".toColorInt()))
-			
+			contentScale = ContentScale.Inside
 		)
 	}
 }

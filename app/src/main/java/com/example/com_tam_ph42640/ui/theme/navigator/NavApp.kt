@@ -24,8 +24,8 @@ fun NavApp() {
         composable(Screen.HomeScreen.route) { HomeScreen() }
         composable(Screen.HistoryScreen.route) { HistoryScreen() }
         composable(Screen.FurnitureApp.route) { FurnitureApp(navController) }
-        composable(Screen.ProfileScreen.route) { ProfileScreen(navController) }
-        composable(Screen.EditProfileScreen.route) { EditProfileScreen(navController) }
+        composable(Screen.ProfileScreen.route) { ProfileScreen() }
+        composable(Screen.EditProfileScreen.route) { EditProfileScreen() }
 
     }
 }
