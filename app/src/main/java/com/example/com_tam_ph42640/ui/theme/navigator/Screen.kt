@@ -10,5 +10,7 @@ enum class Screen(val route : String) {
     HistoryScreen("HistoryScreen"),
     HomeScreen("HomeScreen"),
     FurnitureApp("FurnitureApp"),
-    WelcomeScreen("WelcomeScreen")
+    WelcomeScreen("WelcomeScreen"),
+    ProfileScreen("ProfileScreen"),
+    EditProfileScreen("EditProfileScreen"),
 }
