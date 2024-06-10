@@ -9,7 +9,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.com_tam.repository.RepositoryUser
 import com.example.com_tam_ph42640.database.AppDatabase
 import com.example.com_tam_ph42640.model.LoaiMonAnViewModel
+import com.example.com_tam_ph42640.model.MonAnViewModel
 import com.example.com_tam_ph42640.repository.RepositoryLoaiMon
+import com.example.com_tam_ph42640.repository.RepositoryMonAn
 import com.example.com_tam_ph42640.ui.theme.screen.*
 
 @Composable
@@ -19,6 +21,8 @@ fun NavApp() {
     val repositoryLoaiMon = RepositoryLoaiMon(db)
     val loaiMonAnViewModel = LoaiMonAnViewModel(repositoryLoaiMon)
     val userRepository = RepositoryUser(db)
+    val repositoryMonAn = RepositoryMonAn(db)
+    val monAnViewModel = MonAnViewModel(repositoryMonAn)
     val navController = rememberNavController()
     NavHost(
         navController = navController,
@@ -40,6 +44,8 @@ fun NavApp() {
         composable(Screen.QuanLyLoaiMonAn.route) { QuanLyLoaiMonAn(navController, loaiMonAnViewModel) }
         composable(Screen.SuaLoaiMonAn.route) { SuaLoaiMonAn(viewModel = loaiMonAnViewModel,navController) }
         composable(Screen.XoaLoaiMonAn.route) { XoaLoaiMonAn(viewModel = loaiMonAnViewModel,navController) }
+        composable(Screen.QuanLyMonAn.route) { QuanLyMonAn(navController) }
+        composable(Screen.ThemMonAn.route) { AddMonAn(navController, viewModel =  monAnViewModel, loaiMonAnViewModel = loaiMonAnViewModel) }
 
     }
 }

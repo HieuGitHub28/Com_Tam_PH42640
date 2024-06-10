@@ -56,8 +56,6 @@ fun XoaLoaiMonAn(viewModel: LoaiMonAnViewModel, navController: NavController) {
             .fillMaxSize()
             .background(Color(0xFF252121))
     ) {
-
-
         Row (
             modifier = Modifier
                 .padding(start = 24.dp, top = 10.dp)
@@ -129,7 +127,7 @@ fun XoaLoaiMonAn(viewModel: LoaiMonAnViewModel, navController: NavController) {
                                     showUpdateDialog.value = true
                                 })
                     }
-                    Spacer(modifier = Modifier.width(10.dp) )
+                    Spacer(modifier = Modifier.width(15.dp) )
 
                 }
                 if (showUpdateDialog.value) {
@@ -139,8 +137,6 @@ fun XoaLoaiMonAn(viewModel: LoaiMonAnViewModel, navController: NavController) {
                             Button(
                                 onClick = {
                                     showUpdateDialog.value = false
-
-
                                 }
                             ) {
                                 Text(text = "No")
@@ -165,16 +161,10 @@ fun XoaLoaiMonAn(viewModel: LoaiMonAnViewModel, navController: NavController) {
                         },
                         title = {
                             Text(
-                                text = "Xóa tên loại món ăn",
+                                text = "Bạn muốn xóa loại món ăn?",
                                 fontWeight = FontWeight.Bold,
-                                fontSize = 25.sp,
+                                fontSize = 20.sp,
                                 modifier = Modifier.padding(5.dp)
-                            )
-                        },
-                        text = {
-                            Text(
-                                text = "Bạn chắc chứ ?",
-                                fontSize = 25.sp
                             )
                         }
                     )

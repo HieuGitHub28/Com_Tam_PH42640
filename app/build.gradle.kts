@@ -79,8 +79,7 @@ dependencies {
 
     kapt("androidx.room:room-compiler:2.5.0")
 
-    // Other dependencies
-    implementation("androidx.compose.runtime:runtime-livedata:1.6.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
     implementation("io.coil-kt:coil-compose:2.6.0")
 
     implementation("androidx.navigation:navigation-compose:2.7.7")
@@ -90,4 +89,10 @@ dependencies {
 
     debugImplementation("androidx.compose.ui:ui-tooling:1.6.7")
     implementation("androidx.compose.ui:ui-tooling-preview:1.6.7")
+
+    implementation("androidx.activity:activity-compose:1.4.0-beta01")
+    implementation("io.coil-kt:coil:2.6.0")
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.1")
+    implementation("androidx.compose.runtime:runtime-rxjava2:1.6.1")
+    implementation("androidx.compose.runtime:runtime-rxjava3:1.6.1")
 }

@@ -31,13 +31,15 @@ import androidx.navigation.NavController
 import com.example.com_tam_ph42640.R
 import com.example.com_tam_ph42640.model.LoaiMonAnViewModel
 import com.example.com_tam_ph42640.ui.theme.screen.QuanLyLoaiMonAn
+import com.example.com_tam_ph42640.ui.theme.screen.QuanLyMonAn
 
 
 @Composable
 fun QuanLy(navController: NavController , viewModel: LoaiMonAnViewModel) {
     var isQLLMA by remember{ mutableStateOf(false) }
     var isQLMA by remember{ mutableStateOf(false) }
-   if (isQLLMA) QuanLyLoaiMonAn(navController, viewModel)
+    if (isQLMA) QuanLyMonAn(navController)
+    else if (isQLLMA) QuanLyLoaiMonAn(navController, viewModel)
     else Box(
         modifier = Modifier
             .fillMaxSize()

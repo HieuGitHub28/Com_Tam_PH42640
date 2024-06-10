@@ -16,5 +16,6 @@ enum class Screen(val route : String) {
     QuanLyLoaiMonAn("QuanLyLoaiMonAn"),
     SuaLoaiMonAn("SuaLoaiMonAn"),
     XoaLoaiMonAn("XoaLoaiMonAn"),
-
+    QuanLyMonAn("QuanLyMonAn"),
+    ThemMonAn("ThemMonAn"),
 }
