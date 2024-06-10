@@ -2,13 +2,18 @@ package com.example.com_tam_ph42640
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -47,37 +52,37 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.com_tam_ph42640.model.LoaiMonAnViewModel
 
-
-enum class ROUTE_HOME_SCREEN {
-    Home,
-    History,
-    Manager,
-    Hotro
-}
 
 @Composable
-fun FurnitureApp(navHostController: NavController) {
+fun FurnitureApp(navHostController: NavController, loaiMonAnViewModel: LoaiMonAnViewModel) {
     val navController = rememberNavController()
     val items = listOf(
         BottomNavigationItem(
-            ROUTE_HOME_SCREEN.Home.name,
+            "Trang chủ",
             R.drawable.ic_home
         ),
         BottomNavigationItem(
-            ROUTE_HOME_SCREEN.History.name,
+            "Lịch sử",
             R.drawable.ic_lich_su
         ),
         BottomNavigationItem(
-            ROUTE_HOME_SCREEN.Manager.name,
+            "Quản lý",
             R.drawable.ic_quan_ly
         ),
         BottomNavigationItem(
-            ROUTE_HOME_SCREEN.Hotro.name,
+            "Hỗ trợ",
             R.drawable.ic_ho_so
         )
     )
     var selectedItemIndex by rememberSaveable { mutableStateOf(0) }
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
+    currentRoute?.let { route ->
+        selectedItemIndex = items.indexOfFirst { it.title == route }
+    }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -85,7 +90,13 @@ fun FurnitureApp(navHostController: NavController) {
     ) {
         Scaffold(
             topBar = {
-                TopAppBar(navController = navController, navHostController = navHostController)
+                Column {
+                    TopAppBar(navController = navController, navHostController = navHostController)
+                    Divider(
+                        color = Color.Black, thickness = 4.dp
+                    )
+                }
+
             },
             bottomBar = {
                 BottomNavigationBar(
@@ -98,7 +109,12 @@ fun FurnitureApp(navHostController: NavController) {
                 )
             }
         ) { innerPadding ->
-            NavigationGraph(navController = navController, innerPadding = innerPadding)
+            NavigationGraph(
+                navController = navController,
+                innerPadding = innerPadding,
+                navHostController,
+                loaiMonAnViewModel
+            )
         }
     }
 }
@@ -124,10 +140,10 @@ fun TopAppBar(navController: NavHostController, navHostController: NavController
 
     val title: Any = when (currentRoute) {
         "Trang chủ" -> homeTitle
-        "Lịch Sử" -> "Lịch Sử"
+        "Lịch sử" -> "Lịch sử"
         "Quản lý" -> "Quản lý"
-        "Hồ sơ" -> "Hồ sơ"
-        else -> "..."
+        "Hỗ trợ" -> "Hỗ Trợ"
+        else -> "Cơm tấm"
     }
     androidx.compose.material3.TopAppBar(
         title = {
@@ -150,20 +166,19 @@ fun TopAppBar(navController: NavHostController, navHostController: NavController
 
         },
         actions = {
-            if (currentRoute == "Home") {
-                IconButton(onClick = { navHostController.navigate("cart") }) {
+            if (currentRoute == "Trang chủ") {
+                IconButton(onClick = {}) {
                     Image(
                         painter = painterResource(id = R.drawable.notification),
                         contentDescription = null,
                         modifier = Modifier.size(25.dp)
                     )
                 }
-            }else {
-
+            } else {
                 Icon(
                     painter = painterResource(id = R.drawable.notification),
                     contentDescription = null,
-                    tint = Color.White.copy(alpha = 0f),
+                    tint = Color.White.copy(alpha = 0f), // Đặt alpha để làm trong suốt
                     modifier = Modifier.size(25.dp)
                 )
             }
@@ -173,7 +188,12 @@ fun TopAppBar(navController: NavHostController, navHostController: NavController
             Image(
                 painter = painterResource(id = R.drawable.logo2),
                 contentDescription = null,
-                modifier = Modifier.size(50.dp)
+                modifier = Modifier
+                    .padding(start = 6.dp)
+                    .size(60.dp,52.dp)
+                    .clickable {
+                        navHostController.navigate(Screen.ProfileScreen.route)
+                    }
             )
         },
         colors = TopAppBarDefaults.topAppBarColors(Color(0xFF252121)),
@@ -187,37 +207,45 @@ fun BottomNavigationBar(
     selectedItemIndex: Int,
     onItemSelected: (Int) -> Unit
 ) {
-    NavigationBar(
-        containerColor = Color(0xFF312C2C)
-    ) {
-        items.forEachIndexed { index, item ->
-            NavigationBarItem(
-                selected = selectedItemIndex == index,
-                onClick = { onItemSelected(index) },
-                icon = {
-                    Image(
-                        painter = painterResource(id = item.selectIcon),
-                        contentDescription = item.title,
-                        modifier = Modifier.size(24.dp),
-                        colorFilter = if (selectedItemIndex == index) ColorFilter.tint(Color.Yellow) else ColorFilter.tint(
-                            Color.White
+    Box {
+        Divider(
+            color = Color.Black,
+            thickness = 4.dp,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(4.dp)
+        )
+        NavigationBar(
+            containerColor = Color(0xFF312C2C),
+            modifier = Modifier.padding(top = 4.dp)
+        ) {
+            items.forEachIndexed { index, item ->
+                NavigationBarItem(
+                    selected = selectedItemIndex == index,
+                    onClick = { onItemSelected(index) },
+                    icon = {
+                        Image(
+                            painter = painterResource(id = item.selectIcon),
+                            contentDescription = item.title,
+                            modifier = Modifier.size(24.dp),
+                            colorFilter = if (selectedItemIndex == index) ColorFilter.tint(Color.Yellow) else ColorFilter.tint(
+                                Color.White
+                            )
                         )
-                    )
 
-                },
-                label = {
-                    Text(
-                        text = item.title,
-                        color = if (selectedItemIndex == index) Color.Yellow else Color.White
+                    },
+                    label = {
+                        Text(
+                            text = item.title,
+                            color = if (selectedItemIndex == index) Color.Yellow else Color.White
+                        )
+                    },
+                    alwaysShowLabel = false,
+                    colors = NavigationBarItemDefaults.colors(
+                        indicatorColor = Color(0xFF312C2C)
                     )
-                },
-                alwaysShowLabel = false,
-                colors = NavigationBarItemDefaults.colors(
-                    indicatorColor = Color(0xFF312C2C) // Không có màu con nhộng
                 )
-
-
-            )
+            }
         }
     }
 }
@@ -230,18 +258,16 @@ data class BottomNavigationItem(
 )
 
 @Composable
-fun NavigationGraph(navController: NavHostController, innerPadding: PaddingValues) {
+fun NavigationGraph(navController: NavHostController, innerPadding: PaddingValues, navHostController: NavController,
+                    loaiMonAnViewModel: LoaiMonAnViewModel) {
     NavHost(
         navController,
-        startDestination = ROUTE_HOME_SCREEN.Home.name,
+        startDestination = "Trang chủ",
         modifier = Modifier.padding(innerPadding)
     ) {
-        composable(ROUTE_HOME_SCREEN.Home.name) { HomeScreen() }
-        composable(ROUTE_HOME_SCREEN.History.name) { HistoryScreen() }
-        composable(ROUTE_HOME_SCREEN.Manager.name) { QuanLy() }
-        composable(ROUTE_HOME_SCREEN.Hotro.name) { HoTro() }
+        composable("Trang chủ") { HomeScreen() }
+        composable("Lịch sử") { HistoryScreen() }
+        composable("Quản lý") { QuanLy(navHostController,loaiMonAnViewModel) }
+        composable("Hỗ trợ") { HoTro() }
     }
 }
-
-
-

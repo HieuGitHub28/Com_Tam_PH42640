@@ -15,20 +15,30 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.com_tam_ph42640.R
+import com.example.com_tam_ph42640.model.LoaiMonAnViewModel
+import com.example.com_tam_ph42640.ui.theme.screen.QuanLyLoaiMonAn
 
-@Preview(showBackground = true)
+
 @Composable
-fun QuanLy() {
-    Box(
+fun QuanLy(navController: NavController , viewModel: LoaiMonAnViewModel) {
+    var isQLLMA by remember{ mutableStateOf(false) }
+    var isQLMA by remember{ mutableStateOf(false) }
+   if (isQLLMA) QuanLyLoaiMonAn(navController, viewModel)
+    else Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFF252121)),
@@ -36,26 +46,24 @@ fun QuanLy() {
         Column(
             modifier = Modifier.fillMaxSize(),
         ) {
-            Divider(
-                color = Color.Black,
-                thickness = 3.dp,
-                modifier = Modifier.fillMaxWidth()
-            )
+
             Spacer(modifier = Modifier.padding(18.dp))
             Box(
                 modifier = Modifier
+                    .fillMaxWidth()
                     .height(70.dp)
                     .clickable {
-
+                        isQLLMA = true
+                        isQLMA = false
                     },
-                contentAlignment = Alignment.Center
+                contentAlignment = Alignment.TopStart
             ) {
                 Row(
                     modifier = Modifier
                         .height(70.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Spacer(modifier = Modifier.padding(15.dp))
+                    Spacer(modifier = Modifier.width(10.dp))
                     Image(
                         painter = painterResource(id = R.drawable.logo2),
                         contentDescription = null,
@@ -67,7 +75,7 @@ fun QuanLy() {
                     Spacer(modifier = Modifier.padding(8.dp))
                     Text(
                         text = "Quản lý loại món ăn",
-                        fontSize = 21.sp,
+                        fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White
                     )
@@ -76,18 +84,20 @@ fun QuanLy() {
             Spacer(modifier = Modifier.padding(5.dp))
             Box(
                 modifier = Modifier
+                    .fillMaxWidth()
                     .height(70.dp)
                     .clickable {
-
+                        isQLMA = true
+                        isQLLMA = false
                     },
-                contentAlignment = Alignment.Center
+                contentAlignment = Alignment.TopStart
             ) {
                 Row(
                     modifier = Modifier
                         .height(70.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Spacer(modifier = Modifier.padding(15.dp))
+                    Spacer(modifier = Modifier.width(10.dp))
                     Image(
                         painter = painterResource(id = R.drawable.logo2),
                         contentDescription = null,
@@ -99,7 +109,7 @@ fun QuanLy() {
                     Spacer(modifier = Modifier.padding(8.dp))
                     Text(
                         text = "Quản lý món ăn",
-                        fontSize = 21.sp,
+                        fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White
                     )
