@@ -1,14 +1,13 @@
 package com.example.com_tam_ph42640.database
-
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.example.com_tam.DAO.HoaDonDAO
-import com.example.com_tam.DAO.LoaiMonAnDAO
-import com.example.com_tam.DAO.MonAnDAO
-import com.example.com_tam.DAO.UserDAO
+import com.example.com_tam_ph42640.DAO.HoaDonDAO
+import com.example.com_tam_ph42640.DAO.LoaiMonAnDAO
+import com.example.com_tam_ph42640.DAO.MonAnDAO
+import com.example.com_tam_ph42640.DAO.UserDAO
 import com.example.com_tam_ph42640.HoaDonModel
 import com.example.com_tam_ph42640.LoaiMonAnModel
 import com.example.com_tam_ph42640.MonAnModel
@@ -54,16 +53,17 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
-        fun populateInitialData(userDAO: UserDAO) {
-            // Tạo người dùng mẫu
-            val user = UserModel(
-                email = "hieu@gmail.com",
-                password = "1234",
-                hoTen = "Phạm Minh Hiếu",
-                soDienThoai = "0366350859",
-                role = 1
-            )
-            userDAO.addUser(user)
+        private fun populateInitialData(userDAO: UserDAO) {
+            CoroutineScope(Dispatchers.IO).launch {
+                val user = UserModel(
+                    email = "hieu@gmail.com",
+                    password = "1234",
+                    hoTen = "Phạm Minh Hiếu",
+                    soDienThoai = "0366350859",
+                    role = 1
+                )
+                userDAO.addUser(user)
+            }
         }
     }
 }

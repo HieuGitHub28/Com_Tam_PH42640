@@ -68,23 +68,24 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    
     implementation ("androidx.room:room-runtime:2.6.1")
-    kapt ("androidx.room:room-compiler:2.6.1")
+    annotationProcessor("androidx.room:room-compiler:2.6.1")
 
+    kapt ("androidx.room:room-compiler:2.6.1")
+    annotationProcessor("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
+
+    kapt("androidx.room:room-compiler:2.5.0")
+
+    // Other dependencies
     implementation("androidx.compose.runtime:runtime-livedata:1.6.0")
     implementation("io.coil-kt:coil-compose:2.6.0")
 
-    // Navigation
     implementation("androidx.navigation:navigation-compose:2.7.7")
 
     val composeBom = platform("androidx.compose:compose-bom:2024.05.00")
     implementation(composeBom)
 
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-
     debugImplementation("androidx.compose.ui:ui-tooling:1.6.7")
     implementation("androidx.compose.ui:ui-tooling-preview:1.6.7")
-
 }
