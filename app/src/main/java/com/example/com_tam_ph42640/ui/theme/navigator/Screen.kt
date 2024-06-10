@@ -14,5 +14,7 @@ enum class Screen(val route : String) {
     ProfileScreen("ProfileScreen"),
     EditProfileScreen("EditProfileScreen"),
     QuanLyLoaiMonAn("QuanLyLoaiMonAn"),
+    SuaLoaiMonAn("SuaLoaiMonAn"),
+    XoaLoaiMonAn("XoaLoaiMonAn"),
 
 }

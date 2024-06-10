@@ -38,5 +38,8 @@ fun NavApp() {
         composable(Screen.ProfileScreen.route) { ProfileScreen() }
         composable(Screen.EditProfileScreen.route) { EditProfileScreen() }
         composable(Screen.QuanLyLoaiMonAn.route) { QuanLyLoaiMonAn(navController, loaiMonAnViewModel) }
+        composable(Screen.SuaLoaiMonAn.route) { SuaLoaiMonAn(viewModel = loaiMonAnViewModel,navController) }
+        composable(Screen.XoaLoaiMonAn.route) { XoaLoaiMonAn(viewModel = loaiMonAnViewModel,navController) }
+
     }
 }
