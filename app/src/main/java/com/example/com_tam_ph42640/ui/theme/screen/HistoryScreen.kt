@@ -76,12 +76,22 @@ fun HistoryOrderItem(order: HistoryOrder) {
                 .background(Color.DarkGray)
                 .padding(16.dp)
         ) {
-            Text(
-                text = order.status,
-                color = statusColor,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = order.status,
+                    color = statusColor,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = order.itemCount,
+                    color = Color.Gray,
+                    fontSize = 16.sp
+                )
+            }
             Spacer(modifier = Modifier.height(4.dp))
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -92,20 +102,11 @@ fun HistoryOrderItem(order: HistoryOrder) {
                     color = Color.Gray,
                     fontSize = 16.sp
                 )
-                Column(
-                    horizontalAlignment = Alignment.End
-                ) {
-                    Text(
-                        text = order.itemCount,
-                        color = Color.Gray,
-                        fontSize = 16.sp
-                    )
-                    Text(
-                        text = order.price,
-                        color = Color.Gray,
-                        fontSize = 16.sp
-                    )
-                }
+                Text(
+                    text = order.price,
+                    color = Color.Gray,
+                    fontSize = 16.sp
+                )
             }
         }
     }

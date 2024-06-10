@@ -51,7 +51,7 @@ import androidx.navigation.compose.rememberNavController
 
 enum class ROUTE_HOME_SCREEN {
     Home,
-    Deltail,
+    History,
     Manager,
     Hotro
 }
@@ -65,7 +65,7 @@ fun FurnitureApp(navHostController: NavController) {
             R.drawable.ic_home
         ),
         BottomNavigationItem(
-            ROUTE_HOME_SCREEN.Deltail.name,
+            ROUTE_HOME_SCREEN.History.name,
             R.drawable.ic_lich_su
         ),
         BottomNavigationItem(
@@ -124,7 +124,7 @@ fun TopAppBar(navController: NavHostController, navHostController: NavController
 
     val title: Any = when (currentRoute) {
         "Trang chủ" -> homeTitle
-        "Thống kê" -> "Thống kê"
+        "Lịch Sử" -> "Lịch Sử"
         "Quản lý" -> "Quản lý"
         "Hồ sơ" -> "Hồ sơ"
         else -> "..."
@@ -163,7 +163,7 @@ fun TopAppBar(navController: NavHostController, navHostController: NavController
                 Icon(
                     painter = painterResource(id = R.drawable.notification),
                     contentDescription = null,
-                    tint = Color.White.copy(alpha = 0f), // Đặt alpha để làm trong suốt
+                    tint = Color.White.copy(alpha = 0f),
                     modifier = Modifier.size(25.dp)
                 )
             }
@@ -237,7 +237,7 @@ fun NavigationGraph(navController: NavHostController, innerPadding: PaddingValue
         modifier = Modifier.padding(innerPadding)
     ) {
         composable(ROUTE_HOME_SCREEN.Home.name) { HomeScreen() }
-        composable(ROUTE_HOME_SCREEN.Deltail.name) { XacNhanDonHang() }
+        composable(ROUTE_HOME_SCREEN.History.name) { HistoryScreen() }
         composable(ROUTE_HOME_SCREEN.Manager.name) { QuanLy() }
         composable(ROUTE_HOME_SCREEN.Hotro.name) { HoTro() }
     }
